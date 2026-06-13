@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sude'ye Sürpriz 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Serif+Display:ital@0;1&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-deep: #c2607a;
+    --pink-mid: #e8879f;
+    --pink-soft: #f5c5d3;
+    --pink-blush: #fde8ef;
+    --pink-pale: #fff5f8;
+    --cream: #fdf8f0;
+    --cream-dark: #f5ede0;
+    --brown-warm: #8b5e52;
+    --brown-light: #c4967a;
+    --gold: #d4a843;
+    --text-dark: #3d2628;
+    --text-mid: #7a4a50;
+    --white: #ffffff;
+    --shadow-soft: 0 4px 20px rgba(194, 96, 122, 0.12);
+    --shadow-card: 0 8px 32px rgba(100, 40, 50, 0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='4' fill='%23e8879f' opacity='0.7'/%3E%3C/svg%3E") 10 10, auto;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── FLOATING PETALS ─── */
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    font-size: 1.2rem;
+    animation: petalFall linear infinite;
+    opacity: 0.7;
+  }
+  @keyframes petalFall {
+    0% { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, #fce4ed 0%, var(--cream) 70%);
+  }
+
+  .hero-decor-left {
+    position: absolute;
+    left: -30px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    opacity: 0.08;
+    animation: sway 6s ease-in-out infinite;
+  }
+  .hero-decor-right {
+    position: absolute;
+    right: -30px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    opacity: 0.08;
+    animation: sway 6s ease-in-out infinite reverse;
+  }
+  @keyframes sway { 0%,100%{transform:translateY(-50%) rotate(-5deg)} 50%{transform:translateY(-50%) rotate(5deg)} }
+
+  .hero-ribbon {
+    background: var(--pink-mid);
+    color: white;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 6px 28px;
+    border-radius: 30px;
+    margin-bottom: 1.5rem;
+    animation: fadeDown 0.8s ease both;
+    box-shadow: 0 2px 12px rgba(232, 135, 159, 0.4);
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    color: var(--pink-deep);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+    animation: fadeDown 0.9s ease 0.1s both;
+  }
+
+  .hero-name {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    color: var(--text-dark);
+    font-weight: 700;
+    line-height: 1.1;
+    animation: fadeDown 1s ease 0.2s both;
+  }
+  .hero-name span { color: var(--pink-deep); }
+
+  .hero-sub {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+    animation: fadeDown 1s ease 0.35s both;
+  }
+
+  .hero-cake {
+    font-size: 4rem;
+    animation: bounce 2s ease-in-out infinite, fadeDown 1s ease 0.5s both;
+    display: inline-block;
+    filter: drop-shadow(0 4px 8px rgba(194,96,122,0.2));
+  }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    letter-spacing: 0.1em;
+    animation: fadeIn 2s ease 1.5s both;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 2px solid var(--pink-mid);
+    border-bottom: 2px solid var(--pink-mid);
+    transform: rotate(45deg);
+    animation: arrowBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes arrowBounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(5px)} }
+
+  /* ─── NAV DOTS ─── */
+  .nav-dots {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--pink-soft);
+    border: 2px solid var(--pink-mid);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-dot.active, .nav-dot:hover {
+    background: var(--pink-deep);
+    transform: scale(1.3);
+  }
+
+  /* ─── SECTION BASE ─── */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--pink-mid);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .section-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--pink-mid), var(--pink-soft));
+    border-radius: 2px;
+    margin-bottom: 3rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ─── MESAJ KARTLARI ─── */
+  #mesajlar { background: transparent; }
+
+  .mesaj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .polaroid-card {
+    background: var(--white);
+    padding: 1.2rem 1.2rem 2.5rem;
+    box-shadow: var(--shadow-card), 2px 2px 0 var(--cream-dark);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: rotate(var(--rot, -2deg));
+  }
+  .polaroid-card:hover {
+    transform: rotate(0deg) scale(1.03) translateY(-4px);
+    box-shadow: 0 16px 48px rgba(100,40,50,0.2);
+    z-index: 10;
+  }
+
+  .polaroid-img-area {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--pink-blush);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .polaroid-img-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .polaroid-img-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--pink-mid);
+    font-family: 'Caveat', cursive;
+    font-size: 0.9rem;
+  }
+  .polaroid-img-placeholder span { font-size: 2.5rem; }
+
+  .polaroid-author {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--text-mid);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .polaroid-author::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--pink-mid);
+  }
+  .polaroid-message {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    line-height: 1.6;
+  }
+
+  .tape {
+    position: absolute;
+    background: rgba(212, 168, 67, 0.35);
+    border: 1px solid rgba(212, 168, 67, 0.2);
+  }
+  .tape-top {
+    width: 50px; height: 18px;
+    top: -9px; left: 50%;
+    transform: translateX(-50%) rotate(var(--tape-rot, -1deg));
+  }
+
+  /* ─── FOTOĞRAF GALERİSİ ─── */
+  #galeri {
+    background: var(--pink-pale);
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+  #galeri .inner { max-width: 1100px; margin: 0 auto; }
+
+  .galeri-grid {
+    column-count: 4;
+    column-gap: 1.5rem;
+  }
+  @media(max-width: 900px) {
+    .galeri-grid { column-count: 3; }
+  }
+  @media(max-width: 600px) {
+    .galeri-grid { column-count: 2; }
+  }
+  @media(max-width: 400px) {
+    .galeri-grid { column-count: 1; }
+  }
+
+  .galeri-polaroid {
+    background: var(--white);
+    padding: 0.8rem 0.8rem 1.8rem;
+    box-shadow: var(--shadow-card);
+    transform: rotate(var(--g-rot, 0deg));
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+  }
+  .galeri-polaroid:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 20px 50px rgba(100,40,50,0.22);
+    z-index: 10;
+  }
+
+  .galeri-img-box {
+    width: 100%;
+    background: var(--pink-blush);
+    display: block;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+    border-radius: 4px;
+  }
+  .galeri-img-box img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .galeri-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--text-mid);
+    text-align: center;
+    margin-top: 0.4rem;
+  }
+
+  /* ─── ŞARKILAR ─── */
+  #sarkilar { background: transparent; }
+
+  .sarki-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1.5px solid var(--pink-soft);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .sarki-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid var(--pink-blush);
+    transition: background 0.2s;
+    position: relative;
+  }
+  .sarki-item:last-child { border-bottom: none; }
+  .sarki-item:hover { background: var(--pink-pale); }
+
+  .sarki-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--pink-soft);
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .sarki-disc {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--pink-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    animation: spinDisc 4s linear infinite paused;
+  }
+  .sarki-item:hover .sarki-disc { animation-play-state: running; }
+  @keyframes spinDisc { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+  .sarki-disc::after {
+    content: '';
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--cream);
+    position: absolute;
+  }
+
+  .sarki-info { flex: 1; }
+  .sarki-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    line-height: 1.3;
+  }
+  .sarki-artist {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+  }
+
+  .sarki-note {
+    font-family: 'Caveat', cursive;
+    font-size: 0.85rem;
+    color: var(--pink-mid);
+    text-align: right;
+    max-width: 120px;
+  }
+
+  /* ─── SUDE HAKKINDA ─── */
+  #sude-hakkinda {
+    background: var(--pink-pale);
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+  #sude-hakkinda .inner { max-width: 1000px; margin: 0 auto; }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .fact-card {
+    background: var(--white);
+    border: 1.5px solid var(--pink-soft);
+    border-radius: 16px;
+    padding: 1.4rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .fact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+  .fact-card::before {
+    content: var(--fact-num, '');
+    position: absolute;
+    top: -10px; right: 10px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 5rem;
+    color: var(--pink-blush);
+    line-height: 1;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .fact-emoji {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+  .fact-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── DİLEK ZARFI ─── */
+  #dilek { background: transparent; }
+  .dilek-wrapper { text-align: center; }
+
+  /* ── ZARF SAHNE — perspective burada ── */
+  .zarf-sahne {
+    display: inline-block;
+    position: relative;
+    width: 260px;
+    height: 180px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    perspective: 900px;
+    perspective-origin: 50% 0%;
+  }
+
+  /* ── ZARF GÖVDE (alt kutu) — z:2, clip yok ── */
+  .zarf-govde {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 260px; height: 160px;
+    background: var(--white);
+    border: 2px solid var(--pink-soft);
+    border-radius: 4px 4px 12px 12px;
+    box-shadow: 0 10px 32px rgba(194,96,122,0.18);
+    z-index: 2;
+    overflow: hidden;
+  }
+  /* sol alt üçgen */
+  .zarf-govde::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 0 80px 130px;
+    border-color: transparent transparent var(--pink-blush) transparent;
+  }
+  /* sağ alt üçgen */
+  .zarf-govde::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 80px 130px 0 0;
+    border-color: var(--pink-blush) transparent transparent transparent;
+  }
+
+  /* ── MEKTUP — zarf gövdesinin arkasında başlar, z:3 ── */
+  .zarf-mektup {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    width: 210px;
+    background: #fffbf5;
+    border: 1.5px solid var(--pink-soft);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem 1.4rem;
+    z-index: 3;
+    transform: translateX(-50%) translateY(30px);
+    opacity: 0;
+    transition:
+      transform 0.75s cubic-bezier(0.34, 1.4, 0.64, 1) 0.55s,
+      opacity   0.35s ease                               0.55s;
+    box-shadow: 0 4px 20px rgba(194,96,122,0.12);
+    pointer-events: none;
+  }
+  /* açılınca mektup yukarı fırlar — zarfın tamamen dışına çıkar */
+  .zarf-sahne.acik .zarf-mektup {
+    transform: translateX(-50%) translateY(-195px);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* mektup üst dekoratif çizgi */
+  .mektup-line {
+    width: 40px; height: 2px;
+    background: var(--pink-soft);
+    border-radius: 2px;
+    margin: 0 auto 0.7rem;
+  }
+  .mektup-baslik {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    color: var(--pink-deep);
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  .mektup-icerik {
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    line-height: 1.65;
+    text-align: center;
+  }
+  .mektup-imza {
+    font-family: 'Caveat', cursive;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    text-align: right;
+    margin-top: 0.7rem;
+  }
+
+  /* ── KAPAK (FLAP) — z:4 kapalıyken, açılınca z:1'e düşer ── */
+  .zarf-flap-wrap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 260px; height: 88px;
+    z-index: 4;
+    transform-origin: top center;
+    transform-style: preserve-3d;
+    transition:
+      transform  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+      z-index    0s linear 0.33s;
+  }
+  .zarf-flap-wrap svg { width: 100%; height: 100%; display: block; }
+
+  /* açılınca: 180°'den fazla döner → arkaya geçer, z-index 1'e iner */
+  .zarf-sahne.acik .zarf-flap-wrap {
+    transform: rotateX(-185deg);
+    z-index: 1;
+  }
+
+  /* ── KALP MÜHÜR ── */
+  .zarf-muhr {
+    position: absolute;
+    top: 76px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.4rem;
+    z-index: 5;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(194,96,122,0.3));
+  }
+  .zarf-sahne.acik .zarf-muhr { opacity: 0; }
+
+  /* ── HINT YAZISI ── */
+  .zarf-hint {
+    display: block;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--text-mid);
+    margin-top: 0.4rem;
+    transition: opacity 0.4s;
+    animation: zarfPulse 2s ease-in-out infinite;
+  }
+  @keyframes zarfPulse {
+    0%,100%{ transform:translateY(0); opacity:0.7; }
+    50%{ transform:translateY(-3px); opacity:1; }
+  }
+
+  /* ── STATIK DİLEK KARTI — zarf açılınca belirir ── */
+  .dilek-form {
+    max-width: 480px;
+    margin: 2.4rem auto 0;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease 1.3s, transform 0.55s ease 1.3s;
+    pointer-events: none;
+  }
+  .dilek-form.gorunsun {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .statik-dilek-kart {
+    background: var(--white);
+    border: 1.5px solid var(--pink-soft);
+    border-radius: 16px;
+    padding: 1.6rem 1.8rem 1.4rem;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(194,96,122,0.09);
+  }
+  .statik-dilek-kart::before {
+    content: '🌸';
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+  }
+  .statik-dilek-metin {
+    font-family: 'Caveat', cursive;
+    font-size: 1.18rem;
+    color: var(--text-dark);
+    line-height: 1.75;
+    text-align: center;
+  }
+  .statik-dilek-imza {
+    font-family: 'Caveat', cursive;
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    text-align: right;
+    margin-top: 0.8rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem 4rem;
+    background: radial-gradient(ellipse 80% 80% at 50% 100%, #fce4ed 0%, var(--cream) 70%);
+  }
+  .footer-big {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--pink-deep);
+    margin-bottom: 0.5rem;
+  }
+  .footer-small {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--text-mid);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── CONFETTI ─── */
+  .confetti-piece {
+    position: fixed;
+    width: 8px; height: 8px;
+    pointer-events: none;
+    z-index: 9998;
+    animation: confettiFall linear forwards;
+    border-radius: 1px;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ─── MUSIC BTN ─── */
+  .music-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 200;
+    background: var(--white);
+    border: 2px solid var(--pink-soft);
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--text-mid);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.2s;
+  }
+  .music-btn:hover { border-color: var(--pink-mid); color: var(--text-dark); }
+  .music-note { animation: noteDance 1s ease-in-out infinite alternate; display: inline-block; }
+  @keyframes noteDance { 0%{transform:rotate(-10deg)} 100%{transform:rotate(10deg)} }
+
+  /* responsive */
+  @media(max-width:600px){
+    .fact-grid { grid-template-columns: 1fr 1fr; }
+    .nav-dots { display: none; }
+  }
+
+  /* ─── LIGHTBOX MODAL ─── */
+  .lightbox {
+    display: flex;
+    visibility: hidden;
+    pointer-events: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(61, 38, 40, 0.95);
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+  .lightbox.active {
+    visibility: visible;
+    pointer-events: auto;
+    opacity: 1;
+  }
+  .lightbox-content-wrapper {
+    position: relative;
+    max-width: 90%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lightbox-content {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 8px solid var(--white);
+    object-fit: contain;
+  }
+  .lightbox.active .lightbox-content {
+    transform: scale(1);
+  }
+  .lightbox-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 1.8rem;
+    color: var(--white);
+    margin-top: 1.5rem;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    animation: fadeIn 0.5s ease both;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    color: var(--white);
+    font-size: 3rem;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+    user-select: none;
+  }
+  .lightbox-close:hover {
+    transform: scale(1.2);
+    color: var(--pink-soft);
+  }
+</style>
+</head>
+<body>
+
+<!-- FLOATING PETALS -->
+<div id="petals"></div>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots" aria-label="Bölümler">
+  <div class="nav-dot active" onclick="scrollTo_('#hero')" title="Ana sayfa"></div>
+  <div class="nav-dot" onclick="scrollTo_('#mesajlar')" title="Mesajlar"></div>
+  <div class="nav-dot" onclick="scrollTo_('#galeri')" title="Galeri"></div>
+  <div class="nav-dot" onclick="scrollTo_('#sarkilar')" title="Şarkılar"></div>
+  <div class="nav-dot" onclick="scrollTo_('#sude-hakkinda')" title="Sude Hakkında"></div>
+  <div class="nav-dot" onclick="scrollTo_('#dilek')" title="Dilek Mumu"></div>
+</nav>
+
+<!-- MUSIC BTN -->
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Müzik kontrol">
+  <span class="music-note" id="musicIcon">🎵</span>
+  <span id="musicLabel">Müzik</span>
+</button>
+
+<!-- HERO -->
+<div id="hero" class="hero">
+  <div class="hero-decor-left">🌸</div>
+  <div class="hero-decor-right">🌷</div>
+  <div class="hero-ribbon">✨ Sürpriz Bir Şey Var ✨</div>
+  <h1 class="hero-title">İyi ki doğdun,</h1>
+  <div class="hero-name"><span>Sude</span> 🎀</div>
+  <p class="hero-sub">Bu küçük sayfa, sana olan sevgimizle hazırlandı 💌</p>
+  <div class="hero-cake">🎂</div>
+  <div class="scroll-hint">
+    <span>Kaydır</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</div>
+
+<!-- MESAJ KARTLARI -->
+<section id="mesajlar">
+  <span class="section-label">💌 Sevgiyle yazıldı</span>
+  <h2 class="section-title">Bizden Sana</h2>
+  <div class="section-divider"></div>
+  <div class="mesaj-grid">
+
+    <div class="polaroid-card reveal" style="--rot: -2.5deg">
+      <div class="tape tape-top" style="--tape-rot: -1.5deg"></div>
+      <div class="polaroid-img-area" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.11.jpeg', 'Pınar & Sude 🌸')" style="cursor: pointer;">
+        <img id="pinar-img" src="pictures/WhatsApp Image 2026-06-13 at 21.51.11.jpeg" alt="Pınar ve Sude">
+      </div>
+      <div class="polaroid-author">Pınar</div>
+      <p class="polaroid-message">
+        Sude'm, canım dostum... Seninle paylaştığımız her kahkaha, döktüğümüz her gözyaşı ve sığındığımız her an benim için o kadar değerli ki. Yüzündeki o sıcacık gülüşün en karanlık günümü bile aydınlatmaya yetiyor. İyi ki yollarımız kesişmiş, iyi ki hayatımın en güzel parçası olmuşsun. Doğum günün kutlu olsun balım, seni çok seviyorum! 🌸✨
+      </p>
+    </div>
+
+    <div class="polaroid-card reveal" style="--rot: 2deg; transition-delay: 0.15s">
+      <div class="tape tape-top" style="--tape-rot: 1deg"></div>
+      <div class="polaroid-img-area" onclick="openLightbox('pictures/20260428_150259.jpg', 'Mahmut Sami & Sude 🎉')" style="cursor: pointer;">
+        <img id="mahmut-img" src="pictures/20260428_150259.jpg" alt="Mahmut Sami ve Sude">
+      </div>
+      <div class="polaroid-author">Mahmut Sami</div>
+      <p class="polaroid-message">
+        Canım Sude, bu sayfayı senin için hazırlarken, beraber geçirdiğimiz o eğlenceli ve güzel anları düşünüp durdum ve her defasında yüzümde kocaman bir tebessüm belirdi. Sen hayatımıza neşe, samimiyet ve güzellik katan çok özel birisin. Yeni yaşında dilediğin tüm güzellikler seninle olsun, iyi ki doğdun, iyi ki bizimlesin! 🎉🎂
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOTOĞRAF GALERİSİ -->
+<div id="galeri" style="background: var(--pink-pale); padding: 5rem 2rem;">
+  <div class="inner">
+    <span class="section-label">📸 Anılar</span>
+    <h2 class="section-title">Beraber Geçen Anlar</h2>
+    <div class="section-divider"></div>
+    <div class="galeri-grid">
+      <div class="galeri-polaroid reveal" style="--g-rot: -3deg" onclick="openLightbox('pictures/20240823_170657.jpg', 'Gülüşün Ömre Bedel ✨')">
+        <div class="galeri-img-box">
+          <img src="pictures/20240823_170657.jpg" alt="Anı 1">
+        </div>
+        <p class="galeri-caption">Gülüşün Ömre Bedel ✨</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: 2deg; transition-delay:0.05s" onclick="openLightbox('pictures/20260210_200519.jpg', 'En Tatlı Anımız 🍬')">
+        <div class="galeri-img-box">
+          <img src="pictures/20260210_200519.jpg" alt="Anı 2">
+        </div>
+        <p class="galeri-caption">En Tatlı Anımız 🍬</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: -1.5deg; transition-delay:0.1s" onclick="openLightbox('pictures/IMG-20260126-WA0211.jpg', 'Mutluluk Karesi 📸')">
+        <div class="galeri-img-box">
+          <img src="pictures/IMG-20260126-WA0211.jpg" alt="Anı 3">
+        </div>
+        <p class="galeri-caption">Mutluluk Karesi 📸</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: 3deg; transition-delay:0.15s" onclick="openLightbox('pictures/IMG-20260429-WA0155.jpg', 'Birlikte Çok Güzeliz 💕')">
+        <div class="galeri-img-box">
+          <img src="pictures/IMG-20260429-WA0155.jpg" alt="Anı 4">
+        </div>
+        <p class="galeri-caption">Birlikte Çok Güzeliz 💕</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: -2.5deg; transition-delay:0.2s" onclick="openLightbox('pictures/IMG-20260429-WA0177.jpg', 'Unutulmaz Bir Gün 🌸')">
+        <div class="galeri-img-box">
+          <img src="pictures/IMG-20260429-WA0177.jpg" alt="Anı 5">
+        </div>
+        <p class="galeri-caption">Unutulmaz Bir Gün 🌸</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: 1deg; transition-delay:0.25s" onclick="openLightbox('pictures/IMG-20260429-WA0199.jpg', 'İyi ki Varsın Sude! 🎂')">
+        <div class="galeri-img-box">
+          <img src="pictures/IMG-20260429-WA0199.jpg" alt="Anı 6">
+        </div>
+        <p class="galeri-caption">İyi ki Varsın Sude! 🎂</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: -3.5deg; transition-delay:0.3s" onclick="openLightbox('pictures/IMG-20260429-WA0211.jpg', 'Neşeli Günler ☀️')">
+        <div class="galeri-img-box">
+          <img src="pictures/IMG-20260429-WA0211.jpg" alt="Anı 7">
+        </div>
+        <p class="galeri-caption">Neşeli Günler ☀️</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: 2.5deg; transition-delay:0.35s" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.11 (1).jpeg', 'Kahkahalarımız Eksik Olmasın 😂')">
+        <div class="galeri-img-box">
+          <img src="pictures/WhatsApp Image 2026-06-13 at 21.51.11 (1).jpeg" alt="Anı 8">
+        </div>
+        <p class="galeri-caption">Kahkahalarımız Eksik Olmasın 😂</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: -1deg; transition-delay:0.4s" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.11 (2).jpeg', 'En Güzel Hatıra 🎀')">
+        <div class="galeri-img-box">
+          <img src="pictures/WhatsApp Image 2026-06-13 at 21.51.11 (2).jpeg" alt="Anı 9">
+        </div>
+        <p class="galeri-caption">En Güzel Hatıra 🎀</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: 4deg; transition-delay:0.45s" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.11 (3).jpeg', 'Yüzünden Gülücük Eksilmesin 🌷')">
+        <div class="galeri-img-box">
+          <img src="pictures/WhatsApp Image 2026-06-13 at 21.51.11 (3).jpeg" alt="Anı 10">
+        </div>
+        <p class="galeri-caption">Yüzünden Gülücük Eksilmesin 🌷</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: -2deg; transition-delay:0.5s" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.12 (1).jpeg', 'Harika Bir Anı 🌟')">
+        <div class="galeri-img-box">
+          <img src="pictures/WhatsApp Image 2026-06-13 at 21.51.12 (1).jpeg" alt="Anı 11">
+        </div>
+        <p class="galeri-caption">Harika Bir Anı 🌟</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: 1.5deg; transition-delay:0.55s" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.12 (2).jpeg', 'Dostluğumuz Sonsuz Olsun 🫶')">
+        <div class="galeri-img-box">
+          <img src="pictures/WhatsApp Image 2026-06-13 at 21.51.12 (2).jpeg" alt="Anı 12">
+        </div>
+        <p class="galeri-caption">Dostluğumuz Sonsuz Olsun 🫶</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: -3deg; transition-delay:0.6s" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.12.jpeg', 'Kalp Kalbe Karşı 💖')">
+        <div class="galeri-img-box">
+          <img src="pictures/WhatsApp Image 2026-06-13 at 21.51.12.jpeg" alt="Anı 13">
+        </div>
+        <p class="galeri-caption">Kalp Kalbe Karşı 💖</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: 3deg; transition-delay:0.65s" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.13.jpeg', 'Günün Güzelliği 💮')">
+        <div class="galeri-img-box">
+          <img src="pictures/WhatsApp Image 2026-06-13 at 21.51.13.jpeg" alt="Anı 14">
+        </div>
+        <p class="galeri-caption">Günün Güzelliği 💮</p>
+      </div>
+      <div class="galeri-polaroid reveal" style="--g-rot: -1.5deg; transition-delay:0.7s" onclick="openLightbox('pictures/WhatsApp Image 2026-06-13 at 21.51.14.jpeg', 'Her Anımız Ayrı Güzel 🌺')">
+        <div class="galeri-img-box">
+          <img src="pictures/WhatsApp Image 2026-06-13 at 21.51.14.jpeg" alt="Anı 15">
+        </div>
+        <p class="galeri-caption">Her Anımız Ayrı Güzel 🌺</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SUDE HAKKINDA -->
+<div id="sude-hakkinda" style="background: var(--pink-pale); padding: 5rem 2rem;">
+  <div class="inner">
+    <span class="section-label">🎯 Sude hakkında</span>
+    <h2 class="section-title">Seni Anlatan 6 Şey</h2>
+    <div class="section-divider"></div>
+    <div class="fact-grid">
+      <div class="fact-card reveal" style="--fact-num:'1'">
+        <span class="fact-emoji">😂</span>
+        <p class="fact-text">Güldüğünde tüm oda seninle güler. Neşen bulaşıcı!</p>
+      </div>
+      <div class="fact-card reveal" style="--fact-num:'2'; transition-delay:0.1s">
+        <span class="fact-emoji">🫶</span>
+        <p class="fact-text">Arkadaşlarına her zaman ilk koşan sensin.</p>
+      </div>
+      <div class="fact-card reveal" style="--fact-num:'3'; transition-delay:0.2s">
+        <span class="fact-emoji">✨</span>
+        <p class="fact-text">Pozitif enerjinle etrafındaki herkese ilham veriyorsun.</p>
+      </div>
+      <div class="fact-card reveal" style="--fact-num:'4'; transition-delay:0.3s">
+        <span class="fact-emoji">🎀</span>
+        <p class="fact-text">Detaylara verdiğin önem ve zarafetin her zaman fark ediliyor.</p>
+      </div>
+      <div class="fact-card reveal" style="--fact-num:'5'; transition-delay:0.4s">
+        <span class="fact-emoji">🌸</span>
+        <p class="fact-text">Güzelliğin ve zarafetinle hayatımıza renk katıyorsun.</p>
+      </div>
+      <div class="fact-card reveal" style="--fact-num:'6'; transition-delay:0.5s">
+        <span class="fact-emoji">🌟</span>
+        <p class="fact-text">Hayallerinin peşinden giderken gösterdiğin azim harika.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DİLEK ZARFI -->
+<section id="dilek">
+  <span class="section-label">💌 Sana bir şey var</span>
+  <h2 class="section-title">Dilek Zarfı</h2>
+  <div class="section-divider"></div>
+
+  <div class="dilek-wrapper">
+
+    <div style="display:inline-block; position:relative; padding-top: 210px;">
+      <div class="zarf-sahne" id="zarfSahne" onclick="zarfAc()" title="Zarfı aç!">
+
+        <!-- Gövde -->
+        <div class="zarf-govde"></div>
+
+        <!-- Mektup — gövdenin arkasında (z:3), açılınca yukarı fırlar -->
+        <div class="zarf-mektup" id="zarfMektup">
+          <div class="mektup-line"></div>
+          <p class="mektup-baslik">🌸 Sude'ye</p>
+          <p class="mektup-icerik">
+            Canımız Sude, iyi ki doğdun, iyi ki hayatımızdasın! Seninle geçen her an, paylaştığımız her kahkaha bizim için çok değerli. Seni çok seviyoruz! 💖
+          </p>
+          <p class="mektup-imza">— Pınar & Mahmut Sami 🌷</p>
+        </div>
+
+        <!-- Kapak (flap) — z:4 → açılınca z:1'e iner -->
+        <div class="zarf-flap-wrap" id="zarfFlap">
+          <svg viewBox="0 0 260 88" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="0,0 260,0 130,85" fill="#fde8ef" stroke="#f5c5d3" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Kalp mührü -->
+        <div class="zarf-muhr" id="zarfMuhr">💝</div>
+
+      </div>
+      <span class="zarf-hint" id="zarfHint">Zarfa tıkla 💌</span>
+    </div>
+
+    <!-- Sadece statik dilek kartı — açılınca belirir -->
+    <div class="dilek-form" id="dilekForm">
+      <div class="statik-dilek-kart">
+        <p class="statik-dilek-metin">
+          Senin gibi sıcak kalpli, hayat dolu ve neşeli bir dosta sahip olduğumuz için çok şanslıyız. Yeni yaşında dilediğin tüm güzellikler, tüm hayallerin seni bulsun. Her zaman yanındayız, birlikte nice mutlu, bol kahkahalı yıllara! ✨
+        </p>
+        <p class="statik-dilek-imza">— Pınar & Mahmut Sami 🌷</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-big">Mutlu Yıllar Sude! 🎂</p>
+  <p class="footer-small">Sevgiyle, Pınar & Mahmut Sami 🌸</p>
+  <div style="margin-top:1.5rem; font-size:1.8rem; animation: bounce 2s ease-in-out infinite; display:inline-block">🎉</div>
+</footer>
+
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+  <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
+  <div class="lightbox-content-wrapper" onclick="event.stopPropagation()">
+    <img class="lightbox-content" id="lightboxImg" src="" alt="Büyük Görsel">
+    <div id="lightboxCaption" class="lightbox-caption"></div>
+  </div>
+</div>
+
+<script>
+// ── FLOATING PETALS ──
+(function(){
+  var emojis = ['🌸','🌷','✨','🌺','💮','🎀','💕'];
+  var container = document.getElementById('petals');
+  for(var i=0;i<14;i++){
+    (function(idx){
+      setTimeout(function(){
+        var p = document.createElement('div');
+        p.className='petal';
+        p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        p.style.left = Math.random()*100+'vw';
+        var dur = 8+Math.random()*10;
+        p.style.animationDuration = dur+'s';
+        p.style.animationDelay = (Math.random()*dur)+'s';
+        p.style.fontSize = (0.9+Math.random()*0.8)+'rem';
+        container.appendChild(p);
+        p.addEventListener('animationend',function(){
+          p.remove();
+          setTimeout(function(){
+            var p2 = document.createElement('div');
+            p2.className='petal';
+            p2.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+            p2.style.left = Math.random()*100+'vw';
+            var d2 = 8+Math.random()*10;
+            p2.style.animationDuration = d2+'s';
+            p2.style.fontSize = (0.9+Math.random()*0.8)+'rem';
+            container.appendChild(p2);
+            p2.addEventListener('animationend',function(){ p2.remove(); });
+          }, Math.random()*5000);
+        });
+      }, idx*1000);
+    })(i);
+  }
+})();
+
+// ── SCROLL REVEAL ──
+var reveals = document.querySelectorAll('.reveal');
+function checkReveal(){
+  reveals.forEach(function(el){
+    var rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 60){
+      el.classList.add('visible');
+    }
+  });
+}
+window.addEventListener('scroll', checkReveal);
+checkReveal();
+
+// ── NAV DOTS ──
+var sections = ['hero','mesajlar','galeri','sarkilar','sude-hakkinda','dilek'];
+var dots = document.querySelectorAll('.nav-dot');
+function updateDots(){
+  var scrollY = window.scrollY + window.innerHeight/3;
+  sections.forEach(function(id,i){
+    var el = document.getElementById(id);
+    if(!el) return;
+    if(scrollY >= el.offsetTop){
+      dots.forEach(function(d){d.classList.remove('active');});
+      dots[i].classList.add('active');
+    }
+  });
+}
+window.addEventListener('scroll', updateDots);
+
+function scrollTo_(id){
+  var el = document.querySelector(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+// ── MUSIC ──
+var audioCtx = null;
+var playing = false;
+
+function toggleMusic(){
+  var btn = document.getElementById('musicBtn');
+  var icon = document.getElementById('musicIcon');
+  var label = document.getElementById('musicLabel');
+  if(!playing){
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      playMelody();
+    } else {
+      audioCtx.resume();
+    }
+    playing = true;
+    icon.textContent='🔇';
+    label.textContent='Kapat';
+    icon.style.animation='none';
+  } else {
+    if(audioCtx) audioCtx.suspend();
+    playing = false;
+    icon.textContent='🎵';
+    label.textContent='Müzik';
+    icon.style.animation='noteDance 1s ease-in-out infinite alternate';
+  }
+}
+
+function playMelody(){
+  // Happy Birthday melody (simple tones)
+  var notes = [
+    {f:264,d:0.4},{f:264,d:0.2},{f:297,d:0.6},{f:264,d:0.6},
+    {f:352,d:0.6},{f:330,d:1.0},
+    {f:264,d:0.4},{f:264,d:0.2},{f:297,d:0.6},{f:264,d:0.6},
+    {f:396,d:0.6},{f:352,d:1.0},
+    {f:264,d:0.4},{f:264,d:0.2},{f:528,d:0.6},{f:440,d:0.6},
+    {f:352,d:0.6},{f:330,d:0.6},{f:297,d:1.0},
+    {f:468,d:0.4},{f:468,d:0.2},{f:440,d:0.6},{f:352,d:0.6},
+    {f:396,d:0.6},{f:352,d:1.2}
+  ];
+  var t = audioCtx.currentTime + 0.1;
+  notes.forEach(function(n){
+    var osc = audioCtx.createOscillator();
+    var gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(n.f, t);
+    gain.gain.setValueAtTime(0.12, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + n.d - 0.05);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(t);
+    osc.stop(t + n.d);
+    t += n.d;
+  });
+  // loop
+  var total = notes.reduce(function(a,n){return a+n.d;},0);
+  setTimeout(function(){
+    if(playing && audioCtx && audioCtx.state==='running') playMelody();
+  }, total*1000 + 500);
+}
+
+// Auto-start music on first interaction
+document.addEventListener('click', function startAudio(){
+  if(!playing){
+    toggleMusic();
+  }
+  document.removeEventListener('click', startAudio);
+}, {once:true});
+
+// ── ZARF AÇ ──
+var zarfAcildi = false;
+function zarfAc(){
+  if(zarfAcildi) return;
+  zarfAcildi = true;
+
+  var sahne = document.getElementById('zarfSahne');
+  var form  = document.getElementById('dilekForm');
+  var hint  = document.getElementById('zarfHint');
+
+  // kapak animasyonu başlat
+  sahne.classList.add('acik');
+
+  // hint gizle
+  if(hint){ hint.style.opacity='0'; hint.style.animation='none'; }
+
+  // statik dilek kartını göster (mektup yukarı çıktıktan sonra)
+  setTimeout(function(){ form.classList.add('gorunsun'); }, 100);
+
+  // konfeti — mektup görünürken patlasın
+  setTimeout(function(){ confetti_burst(); }, 600);
+}
+
+// ── CONFETTI ──
+function confetti_burst(){
+  var colors=['#e8879f','#f5c5d3','#d4a843','#c2607a','#fde8ef','#7F77DD','#6bcb77'];
+  for(var i=0;i<60;i++){
+    (function(idx){
+      setTimeout(function(){
+        var c=document.createElement('div');
+        c.className='confetti-piece';
+        c.style.left=Math.random()*100+'vw';
+        c.style.top='0px';
+        c.style.background=colors[Math.floor(Math.random()*colors.length)];
+        c.style.width=(6+Math.random()*6)+'px';
+        c.style.height=(6+Math.random()*6)+'px';
+        c.style.borderRadius=Math.random()>0.5?'50%':'2px';
+        c.style.animationDuration=(2+Math.random()*2.5)+'s';
+        c.style.animationDelay='0s';
+        document.body.appendChild(c);
+        setTimeout(function(){c.remove();},5000);
+      }, idx*40);
+    })(i);
+  }
+}
+
+// ── LIGHTBOX FUNCTIONS ──
+function openLightbox(imgSrc, captionText) {
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCaption = document.getElementById('lightboxCaption');
+  
+  lightboxImg.src = imgSrc;
+  lightboxCaption.textContent = captionText;
+  
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden'; // Scroll kilitle
+}
+
+function closeLightbox(event) {
+  if (event) event.stopPropagation();
+  var lightbox = document.getElementById('lightbox');
+  lightbox.classList.remove('active');
+  document.body.style.overflow = ''; // Scroll kilidini aç
+}
+</script>
+</body>
+</html>
